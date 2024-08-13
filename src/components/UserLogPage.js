@@ -13,6 +13,7 @@ const UserLogPage = () => {
   const [imageComparison, setImageComparison] = useState({});
   const [showImageSelection, setShowImageSelection] = useState(false);
   const [showImageComparison, setShowImageComparison] = useState(false);
+  const [duration, setDuration] = useState(null);
 
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const UserLogPage = () => {
     if (matchingLog) {
       setBarrier(matchingLog.sidewalkBarriers || "No barrier information available");
       setRanking(matchingLog.rankedOptions?.rankedOptions || []);
+      setDuration (matchingLog.duration || "No duration information available");
       categorizeImages(matchingLog.imageSelections || {});
       categorizeComparisons(matchingLog.imageComparisons || []); // Call categorizeComparisons here
     } else {
@@ -157,6 +159,8 @@ const UserLogPage = () => {
             <div>
               <p><strong>Viewing Logs for:</strong> {selectedAid}</p>
               <p><strong>Sidewalk Barriers:</strong> {barrier}</p>
+              {/* show duration conver sec to min */}
+              <p><strong>Duration:</strong> {(duration / 60).toFixed(2)} minutes</p>
               <p><strong>Ranking:</strong></p>
               <ul>
                 {ranking && Array.isArray(ranking) ? (
